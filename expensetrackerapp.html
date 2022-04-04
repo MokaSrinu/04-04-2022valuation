@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <STYLE>
+        body>h1{
+            text-align:center;
+            color:crimson;
+            font-family:arial;
+        }
+        body>#container{
+           width:40%;
+           height:auto;
+           margin:auto;
+           box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+           padding:30px;
+           background-color:cadetblue;
+        }
+        #container2{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:20px;
+            margin-top:30px;
+        }
+        #container2>div{
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            padding:30px;
+        }
+        .size{
+            width:400px;
+            height:30px;
+
+        }
+        .size1{
+            width:408px;
+            height:35px;
+        }
+        .size2{
+            width:408px;
+            height:35px;
+            border-radius:10px;
+            background-color:deepskyblue
+        }
+    </STYLE>
+</head>
+<body>
+    <h1>EXPENSE TRACKER</h1>
+    <div id="container">
+        <form action="" id="form1">
+            <p>SELECT MONTH</p>
+            <select name="" id="month" class="size1">
+                <option value="january">january</option>
+                <option value="february">february</option>
+                <option value="march">march</option>
+                <option value="april">april</option>
+                <option value="may">may</option>
+                <option value="june">june</option>
+                <option value="july">july</option>
+                <option value="august">august</option>
+                <option value="september">september</option>
+                <option value="october">october</option>
+                <option value="november">november</option>
+                <option value="december">december</option>
+            </select>
+            <p>INCOME</p>
+            <input type="number" value="" id="income" class="size">
+            <p>EXPENSES</p>
+            <input type="number" value="" id="expense" class="size"><br><br>
+            <button onclick="myfunction()" class="size2">submit</button>
+        </form>
+    </div>
+    <div id="container2">
+
+    </div>
+</body>
+<script>
+    function myfunction(){
+        event.preventDefault();
+        document.querySelector("#container2").innerHtml="";
+        var count;
+    if(localStorage.getItem("count")==null){
+        count=1;
+    }else{
+        count=localStorage.getItem("count");
+    }
+        var m=document.querySelector("#month").value;
+        var i=document.querySelector("#income").value;
+        var e=document.querySelector("#expense").value;
+        var s=i-e;
+        var arr={
+            month:m,
+            income:i,
+            expense:e,
+            savings:s
+        }
+        localStorage.setItem(count,JSON.stringify(arr));   
+        count++;
+        localStorage.setItem("count",count);
+        display();
+    }
+    function display(){
+           var n=localStorage.getItem("count");
+           //console.log(n);
+           for(var i=1;i<n;i++){
+               var box=document.createElement("div");
+               var h1=document.createElement("h1");
+               h1.innerText=JSON.parse(localStorage.getItem(i)).month;
+               //console.log(localStorage.getItem(i).month);
+               var p1=document.createElement("p");
+               p1.innerText="your income is Rs:"+JSON.parse(localStorage.getItem(i)).income;
+               var p2=document.createElement("p");
+               p2.innerText="your expense is Rs:"+JSON.parse(localStorage.getItem(i)).expense;
+               var p3=document.createElement("p");
+               p3.innerText="your savings is Rs:"+JSON.parse(localStorage.getItem(i)).savings;
+               box.append(h1,p1,p2,p3);
+               document.querySelector("#container2").append(box);
+           }   
+           
+           
+    }
+</script>
+</html>
